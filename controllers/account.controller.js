@@ -6,6 +6,8 @@ exports.credit = asyncHandler(async (req, res) => {
     res.json({ message: "Account Credit Success" })
 })
 exports.debit = asyncHandler(async (req, res) => {
-    await Account.create({ ...req.body, type: "debit" })
+    console.log(req.body);
+    const result = await Account.create({ ...req.body, type: "debit" })
+    console.log(result);
     res.json({ message: "Account Debited Success" })
 })
