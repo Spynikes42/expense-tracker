@@ -1,5 +1,6 @@
 const User = require("../models/User")
 const bcrypt = require("bcrypt")
+const asynchandler = require("express-async-handler")
 
 exports.registerUser = asynchandler(async (req, res) => {
     const { email, name, password } = req.body
