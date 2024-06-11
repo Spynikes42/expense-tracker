@@ -1,17 +1,17 @@
 const User = require("../models/User")
 const bcrypt = require("bcrypt")
 
-exports.registerUser = async (req, res) => {
-    try {
-        const { name, email, password } = req.body
-        const hash = await bcrypt.hash(password, 10)
-        await User.create({ ...req.body, password: hash })
-
-        res.json({ message: "Register  Success" })
-    } catch (error) {
-        res.status(400).json({ message: "Error", error: error.message })
+exports.registerUser = asynchandler(async (req, res) => {
+    const { email, name, password } = req.body
+    // const result = await User.find()   //[] 
+    const result = await User.findOne({ email })   //{}  undefined
+    if (result) {
+        return res.status(400).json({ message: "Email Already Exits" })
     }
-}
+    const x = await bcrypt.hash(req.body.password, 10)
+    await User.create({ name, email, password: x })
+    res.json({ message: "User Registered Success" })
+})
 
 exports.loginUser = async (req, res) => {
     try {
